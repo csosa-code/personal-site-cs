@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cristopher Sosa — Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000;
+  --bg2:#0a0a0a;
+  --bg3:#111;
+  --bg4:#1a1a1a;
+  --surface:#141414;
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.12);
+  --text:#f5f5f7;
+  --text2:#a1a1a6;
+  --text3:#6e6e73;
+  --accent:#2997ff;
+  --accent2:#5ac8fa;
+  --green:#30d158;
+  --grad:linear-gradient(135deg,#2997ff 0%,#5ac8fa 50%,#30d158 100%);
+  --font:'Outfit',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── CURSOR ─────────────────────────────────── */
+.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,background .2s}
+.cursor-follower{position:fixed;width:36px;height:36px;border:1.5px solid rgba(41,151,255,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s ease,width .25s,height .25s,border-color .25s}
+body:hover .cursor{opacity:1}
+
+/* ── NAV ─────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 48px;
+  height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(0,0,0,0.72);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:0.5px solid var(--border);
+  transition:all .3s;
+}
+.nav-logo{font-size:17px;font-weight:600;letter-spacing:-0.3px;color:var(--text)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:400;transition:color .2s;letter-spacing:0.1px}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--accent);color:#fff;
+  font-size:13px;font-weight:500;
+  padding:7px 16px;border-radius:20px;
+  text-decoration:none;
+  transition:background .2s,transform .15s;
+}
+.nav-cta:hover{background:#1a8ae0;transform:scale(1.03)}
+
+/* ── HERO ────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-glow{
+  position:absolute;
+  width:700px;height:700px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(41,151,255,0.12) 0%,rgba(90,200,250,0.06) 40%,transparent 70%);
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  animation:pulse-glow 4s ease-in-out infinite;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%);
+  pointer-events:none;
+}
+@keyframes pulse-glow{
+  0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  border:0.5px solid var(--border2);
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(8px);
+  padding:7px 16px;border-radius:20px;
+  font-size:12px;font-weight:500;
+  color:var(--text2);
+  letter-spacing:0.5px;
+  margin-bottom:32px;
+  animation:fade-up .8s ease both;
+}
+.hero-tag .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+h1.hero-name{
+  font-size:clamp(52px,9vw,96px);
+  font-weight:700;
+  letter-spacing:-3px;
+  line-height:1.0;
+  margin-bottom:12px;
+  animation:fade-up .8s .1s ease both;
+}
+.hero-name .grad-text{
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-title{
+  font-size:clamp(20px,3.5vw,32px);
+  font-weight:300;
+  color:var(--text2);
+  letter-spacing:-0.5px;
+  margin-bottom:24px;
+  animation:fade-up .8s .2s ease both;
+}
+.hero-desc{
+  max-width:600px;
+  font-size:17px;
+  color:var(--text3);
+  line-height:1.7;
+  margin:0 auto 48px;
+  animation:fade-up .8s .3s ease both;
+}
+.hero-actions{
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center;
+  animation:fade-up .8s .4s ease both;
+}
+.btn-primary{
+  background:var(--accent);color:#fff;
+  padding:14px 28px;border-radius:30px;
+  font-size:16px;font-weight:500;
+  text-decoration:none;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 0 30px rgba(41,151,255,0.25);
+}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 50px rgba(41,151,255,0.4)}
+.btn-ghost{
+  border:0.5px solid var(--border2);color:var(--text2);
+  padding:14px 28px;border-radius:30px;
+  font-size:16px;font-weight:400;
+  text-decoration:none;
+  background:rgba(255,255,255,0.04);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.25);color:var(--text);background:rgba(255,255,255,0.07)}
+
+.hero-stack{
+  margin-top:80px;
+  animation:fade-up .8s .5s ease both;
+}
+.hero-stack p{font-size:12px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.stack-icons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.stack-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:20px;
+  border:0.5px solid var(--border);
+  background:rgba(255,255,255,0.03);
+  font-size:12px;font-weight:500;color:var(--text2);
+  font-family:var(--mono);
+  transition:border-color .2s,color .2s,background .2s;
+}
+.stack-chip:hover{border-color:var(--accent);color:var(--accent);background:rgba(41,151,255,0.06)}
+.scroll-hint{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--text3);font-size:12px;letter-spacing:.5px;
+  animation:fade-up .8s .8s ease both;
+}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,transparent,var(--text3));animation:scroll-anim 1.8s ease-in-out infinite}
+@keyframes scroll-anim{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── SECTION BASE ────────────────────────────── */
+section{padding:120px 24px}
+.section-label{
+  font-size:12px;font-weight:500;
+  color:var(--accent);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:16px;
+  font-family:var(--mono);
+}
+.section-title{
+  font-size:clamp(36px,5vw,56px);
+  font-weight:700;letter-spacing:-2px;line-height:1.05;
+  color:var(--text);
+  margin-bottom:16px;
+}
+.section-sub{
+  font-size:19px;color:var(--text2);font-weight:300;
+  max-width:560px;line-height:1.6;
+}
+.container{max-width:1100px;margin:0 auto}
+
+/* ── PROJECTS ────────────────────────────────── */
+#projects{background:var(--bg)}
+.projects-header{margin-bottom:64px}
+.projects-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+@media(max-width:768px){.projects-grid{grid-template-columns:1fr}}
+
+.project-card{
+  background:var(--surface);
+  border:0.5px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  display:flex;flex-direction:column;
+  position:relative;
+}
+.project-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--border2);
+  box-shadow:0 32px 64px rgba(0,0,0,0.5),0 0 0 0.5px rgba(41,151,255,0.2);
+}
+.card-glow{
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.project-card:hover .card-glow{opacity:1}
+
+.card-preview{
+  height:220px;
+  position:relative;overflow:hidden;
+  background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+}
+.card-preview iframe{
+  width:150%;height:150%;
+  border:none;
+  transform:scale(0.667);
+  transform-origin:top left;
+  pointer-events:none;
+  filter:brightness(0.9);
+}
+.card-preview-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 50%,var(--surface) 100%);
+}
+.card-preview-mock{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;
+}
+.mock-icon{font-size:48px;opacity:.6}
+.mock-label{font-size:13px;color:var(--text3);font-family:var(--mono)}
+
+.card-body{padding:28px;flex:1;display:flex;flex-direction:column}
+.card-emoji{font-size:28px;margin-bottom:12px}
+.card-title{
+  font-size:22px;font-weight:600;
+  color:var(--text);letter-spacing:-0.5px;
+  margin-bottom:10px;
+}
+.card-desc{
+  font-size:15px;color:var(--text2);line-height:1.6;
+  margin-bottom:20px;flex:1;
+}
+.card-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.badge{
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:12px;
+  font-family:var(--mono);
+  border:0.5px solid;
+}
+.badge-blue{background:rgba(41,151,255,0.1);color:#5ac8fa;border-color:rgba(41,151,255,0.25)}
+.badge-green{background:rgba(48,209,88,0.08);color:#30d158;border-color:rgba(48,209,88,0.2)}
+.badge-dark{background:rgba(255,255,255,0.04);color:#2997ff;border-color:rgba(41,151,255,0.2)}
+.badge-purple{background:rgba(41,151,255,0.1);color:#5ac8fa;border-color:rgba(41,151,255,0.25)}
+.badge-orange{background:rgba(255,255,255,0.04);color:#a1a1a6;border-color:rgba(255,255,255,0.08)}
+.badge-gray{background:rgba(255,255,255,0.04);color:var(--text3);border-color:var(--border)}
+
+.card-actions{display:flex;gap:10px;flex-wrap:wrap}
+.card-link{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:500;
+  text-decoration:none;
+  padding:8px 16px;border-radius:20px;
+  border:0.5px solid;
+  transition:background .2s,border-color .2s,color .2s,transform .15s;
+}
+.card-link:hover{transform:translateY(-1px)}
+.card-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
+.card-link-demo{
+  background:var(--accent);color:#fff;
+  border-color:var(--accent);
+}
+.card-link-demo:hover{background:#1a8ae0;border-color:#1a8ae0}
+.card-link-repo{
+  background:rgba(255,255,255,0.04);
+  color:var(--text2);
+  border-color:var(--border2);
+}
+.card-link-repo:hover{border-color:rgba(255,255,255,0.25);color:var(--text);background:rgba(255,255,255,0.08)}
+
+/* ── ABOUT ───────────────────────────────────── */
+#about{background:var(--bg2)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1.6fr;
+  gap:80px;align-items:start;
+  margin-top:64px;
+}
+@media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+.about-left{}
+.about-avatar{
+  width:120px;height:120px;border-radius:50%;
+  background:linear-gradient(135deg,#2997ff,#5ac8fa);
+  display:flex;align-items:center;justify-content:center;
+  font-size:44px;font-weight:700;color:#fff;
+  margin-bottom:24px;
+  box-shadow:0 0 0 1px rgba(41,151,255,0.3),0 0 40px rgba(41,151,255,0.15);
+}
+.about-name{font-size:24px;font-weight:600;letter-spacing:-0.5px;margin-bottom:4px}
+.about-role{font-size:15px;color:var(--accent);margin-bottom:20px;font-family:var(--mono)}
+.about-info{display:flex;flex-direction:column;gap:12px}
+.about-info-row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2)}
+.about-info-row svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.5;flex-shrink:0}
+
+.about-right{}
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{
+  display:grid;grid-template-columns:110px 1fr;
+  gap:24px;padding:28px 0;
+  border-bottom:0.5px solid var(--border);
+  position:relative;
+}
+.tl-item:last-child{border-bottom:none}
+.tl-date{
+  font-size:12px;color:var(--text3);
+  font-family:var(--mono);
+  padding-top:4px;line-height:1.4;
+}
+.tl-content{}
+.tl-title{font-size:17px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.3px}
+.tl-company{font-size:13px;color:var(--accent);margin-bottom:8px;font-family:var(--mono)}
+.tl-desc{font-size:14px;color:var(--text2);line-height:1.65}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+
+/* ── SKILLS MARQUEE ──────────────────────────── */
+#skills{
+  padding:80px 0;
+  background:var(--bg);
+  border-top:0.5px solid var(--border);
+  border-bottom:0.5px solid var(--border);
+  overflow:hidden;
+}
+.marquee-wrap{display:flex;flex-direction:column;gap:16px}
+.marquee-row{display:flex;gap:16px;width:max-content}
+.marquee-row.forward{animation:marquee-fwd 30s linear infinite}
+.marquee-row.reverse{animation:marquee-rev 30s linear infinite}
+@keyframes marquee-fwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.marquee-chip{
+  padding:10px 20px;border-radius:24px;
+  border:0.5px solid var(--border);
+  background:rgba(255,255,255,0.03);
+  font-size:14px;font-weight:500;color:var(--text2);
+  white-space:nowrap;font-family:var(--mono);
+  transition:border-color .2s,color .2s;
+}
+.marquee-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── CONTACT ─────────────────────────────────── */
+#contact{
+  background:var(--bg2);
+  text-align:center;
+}
+.contact-card{
+  max-width:640px;margin:48px auto 0;
+  background:var(--surface);
+  border:0.5px solid var(--border);
+  border-radius:28px;
+  padding:56px 48px;
+  position:relative;
+  overflow:hidden;
+}
+.contact-card::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:300px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+}
+.contact-email{
+  font-size:clamp(20px,3vw,28px);font-weight:600;
+  color:var(--text);letter-spacing:-0.5px;
+  margin-bottom:8px;
+}
+.contact-sub{font-size:16px;color:var(--text2);margin-bottom:40px}
+.contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.contact-link{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 24px;border-radius:24px;
+  border:0.5px solid var(--border2);
+  background:rgba(255,255,255,0.04);
+  color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:rgba(41,151,255,0.06)}
+.contact-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{
+  border-top:0.5px solid var(--border);
+  padding:32px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-left{font-size:13px;color:var(--text3)}
+.footer-right{font-size:13px;color:var(--text3);font-family:var(--mono)}
+
+/* ── ANIMATIONS ──────────────────────────────── */
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── SCROLLBAR ───────────────────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── RESPONSIVE NAV ──────────────────────────── */
+@media(max-width:640px){
+  nav{padding:0 24px}
+  .nav-links{display:none}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px}
+  .contact-card{padding:40px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">CS</span>
+  <ul class="nav-links">
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hablemos</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">
+    <span class="dot"></span>
+    Disponible para nuevas oportunidades
+  </div>
+
+  <h1 class="hero-name">
+    Cristopher<br>
+    <span class="grad-text">Sosa</span>
+  </h1>
+
+  <p class="hero-title">Software Engineer Semi-Senior</p>
+
+  <p class="hero-desc">
+    Construyo sistemas empresariales de alta complejidad. Full Stack con Angular, .NET y Spring Boot. Microservicios, arquitectura limpia y entrega real.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#projects" class="btn-primary">Ver proyectos</a>
+    <a href="#about" class="btn-ghost">Mi trayectoria</a>
+  </div>
+
+  <div class="hero-stack">
+    <p>Stack principal</p>
+    <div class="stack-icons">
+      <span class="stack-chip">Angular</span>
+      <span class="stack-chip">.NET Core</span>
+      <span class="stack-chip">Spring Boot</span>
+      <span class="stack-chip">TypeScript</span>
+      <span class="stack-chip">Microservicios</span>
+      <span class="stack-chip">Docker</span>
+      <span class="stack-chip">Tailwind CSS</span>
+      <span class="stack-chip">SQL Server</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-header reveal">
+      <p class="section-label">// proyectos en vivo</p>
+      <h2 class="section-title">Demos reales.<br>Código real.</h2>
+      <p class="section-sub">Sistemas construidos desde cero y desplegados en producción en DigitalOcean con Docker y Nginx.</p>
+    </div>
+
+    <div class="projects-grid">
+      <!-- Card 1: Enterprise Core -->
+      <div class="project-card reveal">
+        <div class="card-glow"></div>
+        <div class="card-preview">
+          <div class="card-preview-mock">
+            <div class="mock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.2" style="width:48px;height:48px;opacity:.7"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+            </div>
+            <span class="mock-label">Enterprise Core — SGE</span>
+          </div>
+          <div class="card-preview-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:12px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.5" style="width:28px;height:28px"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 class="card-title">Sistema de Gestión Empresarial</h3>
+          <p class="card-desc">
+            ERP modular con autenticación JWT, control de roles (RBAC) y gestión de empleados por departamentos. Dashboard con vistas diferenciadas por rol: Administrador y Usuario. Arquitectura escalable lista para producción.
+          </p>
+          <div class="card-badges">
+            <span class="badge badge-blue">Angular</span>
+            <span class="badge badge-blue">Tailwind CSS</span>
+            <span class="badge badge-green">JWT Auth</span>
+            <span class="badge badge-green">RBAC</span>
+            <span class="badge badge-blue">.NET Core</span>
+            <span class="badge badge-gray">SQL Server</span>
+            <span class="badge badge-gray">Docker</span>
+            <span class="badge badge-gray">Nginx</span>
+          </div>
+          <div class="card-actions">
+            <a href="http://206.81.13.114/sge/auth/login" target="_blank" class="card-link card-link-demo">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Ver demo en vivo
+            </a>
+            <a href="https://github.com/cristophersosa/sge" target="_blank" class="card-link card-link-repo">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              Repositorio
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Chat Real-Time -->
+      <div class="project-card reveal">
+        <div class="card-glow"></div>
+        <div class="card-preview">
+          <div class="card-preview-mock">
+            <div class="mock-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.2" style="width:48px;height:48px;opacity:.7"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><circle cx="9" cy="10" r="1" fill="#2997ff"/><circle cx="12" cy="10" r="1" fill="#2997ff"/><circle cx="15" cy="10" r="1" fill="#2997ff"/></svg>
+            </div>
+            <span class="mock-label">Chat Real-Time & DevOps</span>
+          </div>
+          <div class="card-preview-overlay"></div>
+        </div>
+        <div class="card-body">
+          <div style="margin-bottom:12px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.5" style="width:28px;height:28px"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3 class="card-title">Chat de Soporte Real-Time</h3>
+          <p class="card-desc">
+            Plataforma de soporte técnico con mensajería en tiempo real. El agente recibe mensajes instantáneamente sin recargar la página. Arquitectura cliente-servidor con WebSockets, desplegado con Docker Compose y Nginx como gateway.
+          </p>
+          <div class="card-badges">
+            <span class="badge badge-blue">Angular</span>
+            <span class="badge badge-green">WebSockets</span>
+            <span class="badge badge-green">Real-Time</span>
+            <span class="badge badge-blue">.NET Core</span>
+            <span class="badge badge-blue">SignalR</span>
+            <span class="badge badge-gray">Docker Compose</span>
+            <span class="badge badge-gray">Nginx Gateway</span>
+          </div>
+          <div class="card-actions">
+            <a href="http://206.81.13.114/chat/" target="_blank" class="card-link card-link-demo">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Ver demo en vivo
+            </a>
+            <a href="https://github.com/cristophersosa/chat-soporte" target="_blank" class="card-link card-link-repo">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              Repositorio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infra badge -->
+    <div class="reveal" style="margin-top:32px;display:flex;align-items:center;gap:12px;padding:20px 28px;background:var(--surface);border:0.5px solid var(--border);border-radius:16px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2997ff" stroke-width="1.5" style="width:24px;height:24px;flex-shrink:0"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><circle cx="12" cy="10" r="2"/></svg>
+      <div>
+        <p style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px">Infraestructura de producción</p>
+        <p style="font-size:13px;color:var(--text2)">Ambos sistemas corren en un servidor Linux de DigitalOcean con Docker, Docker Compose y Nginx como reverse proxy — el mismo stack que usan equipos de ingeniería profesionales.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS MARQUEE -->
+<div id="skills">
+  <div class="marquee-wrap">
+    <div class="marquee-row forward">
+      <span class="marquee-chip">Angular 12+</span>
+      <span class="marquee-chip">TypeScript</span>
+      <span class="marquee-chip">.NET Core</span>
+      <span class="marquee-chip">C#</span>
+      <span class="marquee-chip">Spring Boot</span>
+      <span class="marquee-chip">Java</span>
+      <span class="marquee-chip">Microservicios</span>
+      <span class="marquee-chip">REST API</span>
+      <span class="marquee-chip">Angular Material</span>
+      <span class="marquee-chip">Docker</span>
+      <span class="marquee-chip">Nginx</span>
+      <span class="marquee-chip">Linux</span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-chip">Angular 12+</span>
+      <span class="marquee-chip">TypeScript</span>
+      <span class="marquee-chip">.NET Core</span>
+      <span class="marquee-chip">C#</span>
+      <span class="marquee-chip">Spring Boot</span>
+      <span class="marquee-chip">Java</span>
+      <span class="marquee-chip">Microservicios</span>
+      <span class="marquee-chip">REST API</span>
+      <span class="marquee-chip">Angular Material</span>
+      <span class="marquee-chip">Docker</span>
+      <span class="marquee-chip">Nginx</span>
+      <span class="marquee-chip">Linux</span>
+    </div>
+    <div class="marquee-row reverse">
+      <span class="marquee-chip">Onion Architecture</span>
+      <span class="marquee-chip">Clean Code</span>
+      <span class="marquee-chip">SSO</span>
+      <span class="marquee-chip">JWT</span>
+      <span class="marquee-chip">SQL Server</span>
+      <span class="marquee-chip">MySQL</span>
+      <span class="marquee-chip">PHP</span>
+      <span class="marquee-chip">IIS</span>
+      <span class="marquee-chip">Apache</span>
+      <span class="marquee-chip">Google Maps API</span>
+      <span class="marquee-chip">PDF Generation</span>
+      <span class="marquee-chip">Docker Compose</span>
+      <!-- duplicate -->
+      <span class="marquee-chip">Onion Architecture</span>
+      <span class="marquee-chip">Clean Code</span>
+      <span class="marquee-chip">SSO</span>
+      <span class="marquee-chip">JWT</span>
+      <span class="marquee-chip">SQL Server</span>
+      <span class="marquee-chip">MySQL</span>
+      <span class="marquee-chip">PHP</span>
+      <span class="marquee-chip">IIS</span>
+      <span class="marquee-chip">Apache</span>
+      <span class="marquee-chip">Google Maps API</span>
+      <span class="marquee-chip">PDF Generation</span>
+      <span class="marquee-chip">Docker Compose</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">// sobre mí</p>
+      <h2 class="section-title">De soporte técnico<br>a <span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Software Engineer.</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <div class="about-avatar">CS</div>
+        <p class="about-name">Cristopher Sosa</p>
+        <p class="about-role">Software Engineer Semi-Senior</p>
+        <div class="about-info">
+          <div class="about-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Guatemala
+          </div>
+          <div class="about-info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +502 5628 6288
+          </div>
+          <div class="about-info-row">
+            <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            4+ años de experiencia
+          </div>
+          <div class="about-info-row">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Univ. Mariano Gálvez
+          </div>
+        </div>
+      </div>
+
+      <div class="about-right reveal">
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-date">2019 — 2020</div>
+            <div class="tl-content">
+              <p class="tl-title">Technical Representative</p>
+              <p class="tl-company">PBS S.A. — Walmart Centroamérica</p>
+              <p class="tl-desc">Soporte especializado para FlexPos en Guatemala, Nicaragua y Honduras. Primer contacto formal con entornos empresariales y capacitación técnica en tres países.</p>
+              <div class="tl-tags">
+                <span class="badge badge-gray">Soporte técnico</span>
+                <span class="badge badge-gray">Capacitación</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">2020</div>
+            <div class="tl-content">
+              <p class="tl-title">Technical Analyst</p>
+              <p class="tl-company">Tacsa S.A.</p>
+              <p class="tl-desc">Soporte técnico avanzado corporativo. Diagnóstico y resolución de incidentes de hardware y software en entornos empresariales.</p>
+              <div class="tl-tags">
+                <span class="badge badge-gray">Hardware</span>
+                <span class="badge badge-gray">Software</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">Feb 2021</div>
+            <div class="tl-content">
+              <p class="tl-title">Inicio como desarrollador</p>
+              <p class="tl-company">Limber IT — Contraloría General de Cuentas</p>
+              <p class="tl-desc">Primer proyecto como programador: módulo de ejecución de auditorías con Angular 12. Formularios reactivos, tablas, steps, generación de PDFs y Excel. Aquí nacieron las bases reales de mi carrera.</p>
+              <div class="tl-tags">
+                <span class="badge badge-blue">Angular 12</span>
+                <span class="badge badge-blue">Angular Material</span>
+                <span class="badge badge-orange">PDF/Excel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">2021 — 2022</div>
+            <div class="tl-content">
+              <p class="tl-title">Full Stack Developer</p>
+              <p class="tl-company">Limber IT — INAB, Municipalidad SCPinula</p>
+              <p class="tl-desc">Primer salto a backend con .NET en 15 días de curva de aprendizaje. Sistema forestal con integración de mapas y polígonos. Sistema de convenios con generación de PDF en tiempo real e integración de API externa por DPI.</p>
+              <div class="tl-tags">
+                <span class="badge badge-purple">.NET</span>
+                <span class="badge badge-blue">Angular</span>
+                <span class="badge badge-green">Google Maps API</span>
+                <span class="badge badge-orange">Onion Architecture</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-date">2022 — 2023</div>
+            <div class="tl-content">
+              <p class="tl-title">Software Engineer — Semi-Senior</p>
+              <p class="tl-company">Limber IT — SVET & SICOM</p>
+              <p class="tl-desc">ERP institucional con microservicios y Spring Boot para el SVET (RRHH, Financiero, Almacén). Lideré 2 desarrolladores junior. Sistema SICOM para Juegos Centroamericanos con SSO centralizado, builds de producción y despliegue en Linux con Apache e IIS.</p>
+              <div class="tl-tags">
+                <span class="badge badge-green">Spring Boot</span>
+                <span class="badge badge-green">Microservicios</span>
+                <span class="badge badge-green">SSO</span>
+                <span class="badge badge-purple">.NET</span>
+                <span class="badge badge-blue">Angular</span>
+                <span class="badge badge-gray">Linux deploy</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">// contacto</p>
+      <h2 class="section-title">¿Construimos<br>algo juntos?</h2>
+      <p class="section-sub" style="margin:0 auto">Disponible para posiciones full time, remoto o híbrido. Respondó rápido.</p>
+    </div>
+
+    <div class="contact-card reveal">
+      <p class="contact-email">cristophersosa.dev</p>
+      <p class="contact-sub">Guatemala · Abierto a trabajo remoto internacional</p>
+      <div class="contact-links">
+        <a href="tel:+50256286288" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          +502 5628 6288
+        </a>
+        <a href="https://linkedin.com/in/cristophersosa" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/cristophersosa" target="_blank" class="contact-link">
+          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">© 2025 Cristopher Josué Sosa Chilin</span>
+  <span class="footer-right">Guatemala 🇬🇹</span>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('follower');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+function animFollower(){
+  fx+=(mx-fx)*.12;fy+=(my-fy)*.12;
+  follower.style.left=fx+'px';follower.style.top=fy+'px';
+  requestAnimationFrame(animFollower);
+}
+animFollower();
+document.querySelectorAll('a,button,.project-card,.stack-chip,.marquee-chip').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cursor.style.width='6px';cursor.style.height='6px';
+    follower.style.width='52px';follower.style.height='52px';
+    follower.style.borderColor='rgba(41,151,255,0.7)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    cursor.style.width='10px';cursor.style.height='10px';
+    follower.style.width='36px';follower.style.height='36px';
+    follower.style.borderColor='rgba(41,151,255,0.4)';
+  });
+});
+
+// Scroll reveal
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Nav blur on scroll
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  nav.style.background=window.scrollY>20?'rgba(0,0,0,0.85)':'rgba(0,0,0,0.72)';
+});
+</script>
+</body>
+</html>
