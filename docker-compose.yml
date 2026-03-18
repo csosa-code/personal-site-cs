@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+
+  portfolio:
+    build: .
+    container_name: portfolio
+    restart: always
+    networks:
+      - apps-network
+
+networks:
+  apps-network:
+    external: true
